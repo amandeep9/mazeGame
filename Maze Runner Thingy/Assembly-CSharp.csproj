@@ -38,13 +38,14 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="UnityEngine">
-      <HintPath>D:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
+      <HintPath>D:/Program Files/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor">
-      <HintPath>D:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
+      <HintPath>D:/Program Files/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\LightSwitch.cs" />
      <Compile Include="Assets\Scripts\ColorChange.cs" />
      <Compile Include="Assets\Scripts\Flashlight.cs" />
      <Compile Include="Assets\Scripts\FloorLight.cs" />
@@ -53,17 +54,19 @@
      <Compile Include="Assets\Scripts\LookAtCamera.cs" />
      <Compile Include="Assets\Scripts\MapGenerator.cs" />
      <Compile Include="Assets\Scripts\MouseOrbit.cs" />
+     <Compile Include="Assets\Scripts\MouseRotation.cs" />
      <Compile Include="Assets\Scripts\PlayerController.cs" />
      <Compile Include="Assets\Scripts\Raycast3.cs" />
      <Compile Include="Assets\Scripts\Utility.cs" />
+     <Compile Include="Assets\Scripts\movement.cs" />
  <Reference Include="UnityEngine.UI">
- <HintPath>D:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
+ <HintPath>D:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.Networking">
- <HintPath>D:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
+ <HintPath>D:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.Analytics">
- <HintPath>D:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
+ <HintPath>D:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
