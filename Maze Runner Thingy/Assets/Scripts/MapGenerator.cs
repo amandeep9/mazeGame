@@ -14,8 +14,9 @@ public class MapGenerator : MonoBehaviour {
 
 	public int seed = 10;
 	Coord mapCenter;
+    Coord nextLevelMap;
 	public Vector3 playerSpawn;
-
+    public Vector3 nextLevelSpawn;
 	List<Coord> allTileCords;
 	Queue<Coord> shuffledTileCoords;
 
@@ -36,8 +37,9 @@ public class MapGenerator : MonoBehaviour {
 		}
 		shuffledTileCoords = new Queue<Coord>(Utility.ShuffleArray(allTileCords.ToArray(), seed));
 		mapCenter = new Coord ((int)(mapSize.x / 2), (int)(mapSize.y / 2));
+        nextLevelMap = new Coord((int)(mapSize.x / 2), (int)(mapSize.y / 2));
 		playerSpawn = CoordtoPos (mapCenter.x, mapCenter.y);
-
+        nextLevelSpawn = CoordtoPos(nextLevelMap.x, nextLevelMap.y);
 		string holderName = "Generated Map";
 		if (transform.FindChild (holderName)) {
 			DestroyImmediate (transform.FindChild (holderName).gameObject);
@@ -106,8 +108,9 @@ public class MapGenerator : MonoBehaviour {
 		bool[,] mapFlags = new bool[obstacleMap.GetLength (0), obstacleMap.GetLength (1)];
 		Queue<Coord> queue = new Queue<Coord> ();
 		queue.Enqueue (mapCenter);
+        queue.Enqueue(nextLevelMap);
 		mapFlags [mapCenter.x, mapCenter.y] = true;
-
+        mapFlags[nextLevelMap.x, nextLevelMap.y] = true;
 		int accessibleTileCount = 1;
 
 		while (queue.Count > 0) 

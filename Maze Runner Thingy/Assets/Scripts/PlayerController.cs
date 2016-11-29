@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 //using UnityEditor;
 
@@ -38,5 +39,13 @@ public class PlayerController : MonoBehaviour
         transform.Translate(x1, 0, 0);
 
         GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
+    }
+
+    void OnCollisionEnter(Collision c)
+    {
+        if (c.gameObject.name == "nextLevel")
+        {
+            SceneManager.LoadScene("MapGenerator");
+        }
     }
 }
