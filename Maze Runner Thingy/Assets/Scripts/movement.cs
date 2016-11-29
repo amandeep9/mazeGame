@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class movement : MonoBehaviour {
@@ -92,5 +93,11 @@ public class movement : MonoBehaviour {
 		normal = hit.normal;
 	}
 
-
+	void OnCollisionEnter(Collision c)
+	{
+		if (c.gameObject.name == "nextLevel")
+		{
+			SceneManager.LoadScene("MapGenerator");
+		}
+	}
 }
