@@ -45,9 +45,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\ColorChange.cs" />
      <Compile Include="Assets\Scripts\Flashlight.cs" />
+     <Compile Include="Assets\Scripts\FloorLight.cs" />
      <Compile Include="Assets\Scripts\GameController.cs" />
-     <Compile Include="Assets\Scripts\Light.cs" />
+     <Compile Include="Assets\Scripts\LightColorChange.cs" />
      <Compile Include="Assets\Scripts\LookAtCamera.cs" />
      <Compile Include="Assets\Scripts\MapGenerator.cs" />
      <Compile Include="Assets\Scripts\MouseOrbit.cs" />
