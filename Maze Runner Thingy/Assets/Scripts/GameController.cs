@@ -11,10 +11,10 @@ public class GameController : MonoBehaviour {
 		int rand = (int)Random.Range (0f, 1000000f);
 		print (rand);
 		GameObject.Find("Map").GetComponent<MapGenerator>().seed = rand;
-		GameObject.Find ("Map").GetComponent<MapGenerator> ().obstaclePercent = Random.Range (0.7f, 1f);
+		GameObject.Find ("Map").GetComponent<MapGenerator> ().obstaclePercent = Random.Range (0.9f, 1f);
 		GameObject.Find("Map").GetComponent<MapGenerator>().GenerateMap();
 		Transform Player = Instantiate (playerPrefab, GameObject.Find ("Map").GetComponent<MapGenerator> ().playerSpawn + Vector3.up *0.5f, Quaternion.identity) as Transform;
-        Transform next = Instantiate(nextLevel, GameObject.Find("Map").GetComponent<MapGenerator>().nextLevelSpawn + new Vector3(Random.Range(4, 10), 1, Random.Range(4, 10)) * 0.5f, Quaternion.identity) as Transform;
+		Transform next = Instantiate(nextLevel, GameObject.Find("Map").GetComponent<MapGenerator>().nextLevelSpawn + Vector3.up * 0.5f, Quaternion.identity) as Transform;
 		Player.name = "Player";
         next.name = "nextLevel";
 	}

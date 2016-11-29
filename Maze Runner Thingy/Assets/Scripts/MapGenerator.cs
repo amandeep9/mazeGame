@@ -18,8 +18,9 @@ public class MapGenerator : MonoBehaviour {
 	public Vector3 playerSpawn;
     public Vector3 nextLevelSpawn;
 	List<Coord> allTileCords;
-	List<Coord> cornerTileCords;
+	List<Coord> endTileCoords;
 	Queue<Coord> shuffledTileCoords;
+	Queue<Coord> shuffledEnds;
 
 	void Start()
 	{
@@ -29,7 +30,7 @@ public class MapGenerator : MonoBehaviour {
 	public void GenerateMap ()
 	{
 		allTileCords = new List<Coord> ();
-		cornerTileCords = new List<Coord> ();
+		endTileCoords = new List<Coord> ();
 		for (int x = 0; x < mapSize.x; x++)
 		{
 			for (int y = 0; y < mapSize.y; y++)
@@ -37,17 +38,10 @@ public class MapGenerator : MonoBehaviour {
 				allTileCords.Add (new Coord (x, y));
 			}
 		}
-		cornerTileCords.Add (new Coord (1, 1));
-		cornerTileCords.Add (new Coord ((int)mapSize.x-2, 1));
-		cornerTileCords.Add (new Coord (1, (int)mapSize.y-2));
-		cornerTileCords.Add (new Coord ((int)mapSize.x-2, (int)mapSize.y-2));
 
-		var goalCorner = Random.Range (0, 3);
 		shuffledTileCoords = new Queue<Coord>(Utility.ShuffleArray(allTileCords.ToArray(), seed));
 		mapCenter = new Coord ((int)(mapSize.x / 2), (int)(mapSize.y / 2));
 		playerSpawn = CoordtoPos (mapCenter.x, mapCenter.y);
-		nextLevelMap = cornerTileCords [goalCorner];
-		nextLevelSpawn = CoordtoPos(nextLevelMap.x, nextLevelMap.y);
 		string holderName = "Generated Map";
 		if (transform.FindChild (holderName)) {
 			DestroyImmediate (transform.FindChild (holderName).gameObject);
@@ -109,21 +103,27 @@ public class MapGenerator : MonoBehaviour {
 				currentObstacleCount--;
 			}
 		}
+		shuffledEnds = new Queue<Coord>(Utility.ShuffleArray(endTileCoords.ToArray(), seed));
+		nextLevelMap = GetRandomCorner ();
+		nextLevelSpawn = CoordtoPos (nextLevelMap.x, nextLevelMap.y);
+		print (endTileCoords.Count);
+		//print (nextLevelSpawn);
+
 	}
 
 	bool MapIsFullyAccessible (bool[,] obstacleMap, int currentObstacleCount)
 	{
 		bool[,] mapFlags = new bool[obstacleMap.GetLength (0), obstacleMap.GetLength (1)];
+		endTileCoords = new List<Coord> ();
 		Queue<Coord> queue = new Queue<Coord> ();
 		queue.Enqueue (mapCenter);
-        queue.Enqueue(nextLevelMap);
 		mapFlags [mapCenter.x, mapCenter.y] = true;
-        mapFlags[nextLevelMap.x, nextLevelMap.y] = true;
 		int accessibleTileCount = 1;
 
 		while (queue.Count > 0) 
 		{
 			Coord tile = queue.Dequeue ();
+			int openTiles = 0;
 
 			for (int x = -1; x <= 1; x++)
 			{
@@ -135,15 +135,19 @@ public class MapGenerator : MonoBehaviour {
 					{
 						if (neighborX >= 0 && neighborX < obstacleMap.GetLength (0) && neighborY >= 0 && neighborY < obstacleMap.GetLength (1)) 
 						{
-							if (!mapFlags [neighborX, neighborY] && !obstacleMap[neighborX, neighborY]) 
+							if (!mapFlags [neighborX, neighborY] && !obstacleMap [neighborX, neighborY]) 
 							{
 								mapFlags [neighborX, neighborY] = true;
-								queue.Enqueue (new Coord(neighborX, neighborY));
+								queue.Enqueue (new Coord (neighborX, neighborY));
 								accessibleTileCount++;
+								openTiles++;
 							}
 						}
 					}
 				}
+			}
+			if (openTiles == 0) {
+				endTileCoords.Add (new Coord (tile.x, tile.y));
 			}
 		}
 
@@ -160,6 +164,13 @@ public class MapGenerator : MonoBehaviour {
 	{
 		Coord randomCoord = shuffledTileCoords.Dequeue ();
 		shuffledTileCoords.Enqueue (randomCoord);
+		return randomCoord;
+	}
+
+	public Coord GetRandomCorner ()
+	{
+		Coord randomCoord = shuffledEnds.Dequeue ();
+		shuffledEnds.Enqueue (randomCoord);
 		return randomCoord;
 	}
 
