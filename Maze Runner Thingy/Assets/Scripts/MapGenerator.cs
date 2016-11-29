@@ -82,7 +82,8 @@ public class MapGenerator : MonoBehaviour {
 			}
 		}
 
-		for (int i = 0; i < obstacleCount; i++) {
+		for (int i = 0; i < obstacleCount; i++)
+        {
 			Coord randomCoord = GetRandomCoord ();
 
 			obstacleMap [randomCoord.x, randomCoord.y] = true;
@@ -95,7 +96,7 @@ public class MapGenerator : MonoBehaviour {
 				Vector3 obstaclePos = CoordtoPos (randomCoord.x, randomCoord.y);
 				Transform newObstacle = Instantiate (obstaclePrefab, obstaclePos + Vector3.up * 0.5f, Quaternion.identity) as Transform;
 				newObstacle.parent = mapHolder;
-				newObstacle.transform.localScale = new Vector3 (1f, Random.Range (1f, 3f), 1f);
+				newObstacle.transform.localScale = new Vector3 (1f, 3f, 1f);
 			}
 			else
 			{
