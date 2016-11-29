@@ -38,9 +38,9 @@ public class MapGenerator : MonoBehaviour {
 			}
 		}
 		cornerTileCords.Add (new Coord (1, 1));
-		cornerTileCords.Add (new Coord (mapSize.x-2, 1));
-		cornerTileCords.Add (new Coord (1, mapSize.y-2));
-		cornerTileCords.Add (new Coord (mapSize.x-2, mapSize.y-2));
+		cornerTileCords.Add (new Coord ((int)mapSize.x-2, 1));
+		cornerTileCords.Add (new Coord (1, (int)mapSize.y-2));
+		cornerTileCords.Add (new Coord ((int)mapSize.x-2, (int)mapSize.y-2));
 
 		var goalCorner = Random.Range (0, 3);
 		shuffledTileCoords = new Queue<Coord>(Utility.ShuffleArray(allTileCords.ToArray(), seed));
