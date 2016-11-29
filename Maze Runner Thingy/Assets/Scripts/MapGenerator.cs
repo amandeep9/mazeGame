@@ -18,6 +18,7 @@ public class MapGenerator : MonoBehaviour {
 	public Vector3 playerSpawn;
     public Vector3 nextLevelSpawn;
 	List<Coord> allTileCords;
+	List<Coord> cornerTileCords;
 	Queue<Coord> shuffledTileCoords;
 
 	void Start()
@@ -28,6 +29,7 @@ public class MapGenerator : MonoBehaviour {
 	public void GenerateMap ()
 	{
 		allTileCords = new List<Coord> ();
+		cornerTileCords = new List<Coord> ();
 		for (int x = 0; x < mapSize.x; x++)
 		{
 			for (int y = 0; y < mapSize.y; y++)
@@ -35,11 +37,17 @@ public class MapGenerator : MonoBehaviour {
 				allTileCords.Add (new Coord (x, y));
 			}
 		}
+		cornerTileCords.Add (new Coord (1, 1));
+		cornerTileCords.Add (new Coord (mapSize.x-2, 1));
+		cornerTileCords.Add (new Coord (1, mapSize.y-2));
+		cornerTileCords.Add (new Coord (mapSize.x-2, mapSize.y-2));
+
+		var goalCorner = Random.Range (0, 3);
 		shuffledTileCoords = new Queue<Coord>(Utility.ShuffleArray(allTileCords.ToArray(), seed));
 		mapCenter = new Coord ((int)(mapSize.x / 2), (int)(mapSize.y / 2));
-        nextLevelMap = new Coord((int)(mapSize.x / 2), (int)(mapSize.y / 2));
 		playerSpawn = CoordtoPos (mapCenter.x, mapCenter.y);
-        nextLevelSpawn = CoordtoPos(nextLevelMap.x, nextLevelMap.y);
+		nextLevelMap = cornerTileCords [goalCorner];
+		nextLevelSpawn = CoordtoPos(nextLevelMap.x, nextLevelMap.y);
 		string holderName = "Generated Map";
 		if (transform.FindChild (holderName)) {
 			DestroyImmediate (transform.FindChild (holderName).gameObject);
