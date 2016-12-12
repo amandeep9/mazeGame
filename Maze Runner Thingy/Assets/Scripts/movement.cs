@@ -10,6 +10,8 @@ public class movement : MonoBehaviour {
 	public float jumpSpeed = 10f;
 	public float gravStrength =5f;
 	public float aerialSpeed =2f;
+	public float time = 0f;
+	public bool running = true;
 	bool canJump = false;
 	bool onWall = false;
 	float vertVelocity;
@@ -19,9 +21,16 @@ public class movement : MonoBehaviour {
 
 	Quaternion inputRotation;
 
+	void Start () {
+		running = !GameObject.Find ("UI").GetComponent<Pause> ().isPaused;
+	}
+
 	// Update is called once per frame
 	void Update () 
 	{
+		if (running == true)
+			time += Time.deltaTime;
+		print ("time: "+time);
 		Vector3 myVector = Vector3.zero;
 
 		//get input from the player
@@ -97,7 +106,10 @@ public class movement : MonoBehaviour {
 	{
 		if (c.gameObject.name == "nextLevel")
 		{
-			SceneManager.LoadScene("MapGenerator");
+			PlayerPrefs.SetFloat ("Lastscore", time);
+			if(time< PlayerPrefs.GetFloat("Highscore"))
+				PlayerPrefs.SetFloat ("Highscore", time);
+			SceneManager.LoadScene("Start");
 		}
 	}
 }
